@@ -14,11 +14,11 @@ public class Letra implements Runnable {
 	}
 	public void run(){
 		for (int i=0;i<100;i++){
-			synchronized(this){
+			synchronized(tr){
 							
 				while (letra!=tr.getT()){
 					try {
-						this.wait();
+						tr.wait();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -27,12 +27,10 @@ public class Letra implements Runnable {
 				System.out.println(letra);
 				if(letra=='A') tr.setT('B');
 				else if(letra=='B') tr.setT('C');
-				else tr.setT('A');;
-			
+				else tr.setT('A');
+				tr.notifyAll();
 			}
-				synchronized (this) {
-					this.notifyAll();	
-				}
+				
 			
 				
 		}
